@@ -1,0 +1,22 @@
+apply plugin: 'java'
+apply plugin: 'java-library'
+
+java {
+    modularity.inferModulePath = true
+}
+
+group 'com.alexrnv.algobook.math'
+version '0.0.1'
+
+repositories {
+    mavenCentral()
+}
+
+jar{
+    archiveName 'algobook-math.jar'
+}
+
+dependencies {
+    api project(':com.alexrnv.algobook.util')
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

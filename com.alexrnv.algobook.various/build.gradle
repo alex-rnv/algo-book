@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group 'com.alexrnv.algobook.various'
+version '0.0.1'
+
+repositories {
+    mavenCentral()
+}
+
+jar{
+    archiveName 'algobook-various.jar'
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

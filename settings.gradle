@@ -1,0 +1,6 @@
+rootProject.name = 'algo-book'
+include 'com.alexrnv.algobook.math'
+include 'com.alexrnv.algobook.util'
+include 'com.alexrnv.algobook.cs'
+include 'com.alexrnv.algobook.various'
+
