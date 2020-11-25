@@ -13,7 +13,7 @@ repositories {
 }
 
 jar{
-    archiveName 'algobook-math.jar'
+    archiveName 'algobook-util.jar'
 }
 
 dependencies {
