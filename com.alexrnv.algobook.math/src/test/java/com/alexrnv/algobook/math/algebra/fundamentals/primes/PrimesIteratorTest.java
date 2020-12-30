@@ -93,7 +93,7 @@ public class PrimesIteratorTest {
         assertListsEqual(primesEratosthenes, primesIterator);
     }
 
-    private static List<Long> readAll(Iterator<Long> iter) {
+    static List<Long> readAll(Iterator<Long> iter) {
         List<Long> result = new ArrayList<>();
         while(iter.hasNext()) {
             result.add(iter.next());
@@ -101,7 +101,7 @@ public class PrimesIteratorTest {
         return result;
     }
 
-    private static void assertListsEqual(List<Long> list1, List<Long> list2) {
+    static void assertListsEqual(List<Long> list1, List<Long> list2) {
         assertEquals(list1.size(), list2.size());
         for (int i=0; i< list1.size(); i++) {
             assertEquals(list1.get(i), list2.get(i));

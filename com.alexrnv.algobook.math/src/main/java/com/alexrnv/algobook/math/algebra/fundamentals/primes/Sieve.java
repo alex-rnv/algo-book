@@ -16,7 +16,7 @@ class Sieve {
     }
 
     void mark(long prime) {
-        for (long j = 3 * prime; j <= size; j += 2 * prime) {
+        for (long j = prime * prime; j <= size; j += 2 * prime) {
             sieve.set(bitIndex(j));
         }
     }

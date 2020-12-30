@@ -16,7 +16,6 @@ class Block {
     Block(int blockSize, long blockOffset) {
         this.blockSize = blockSize;
         this.block = new BitSet(blockSize >> 1);
-//        this.block = new BitSet(blockSize);
         this.blockOffset = blockOffset;
     }
 
@@ -30,7 +29,6 @@ class Block {
 
     boolean get(int blockIndex) {
         return (blockIndex & 1) == 0 || block.get(bitIndex(blockIndex));
-//        return block.get(blockIndex);
     }
 
     void precalculate(ArrayList<Long> basePrimes) {
@@ -38,13 +36,11 @@ class Block {
             if (prime == 2L) continue;
             long startIndex = (blockOffset + prime - 1) / prime;
             long primeSqIdx = Math.max(startIndex, prime) * prime - blockOffset;
-            if (primeSqIdx > blockSize) continue;
-            int j = (int)primeSqIdx;
+            if (primeSqIdx > blockSize) break; //at this point all prime multiples will exceed the segment
+            int j = (int) primeSqIdx;
             if ((j & 1) == 0) j += prime;
-            for (; j < blockSize; j += 2*prime) {
-//                if ((j & 1) != 0)
-                    block.set(bitIndex(j));
-//                block.set(j);
+            for (; j < blockSize; j += 2 * prime) {
+                block.set(bitIndex(j));
             }
         }
     }

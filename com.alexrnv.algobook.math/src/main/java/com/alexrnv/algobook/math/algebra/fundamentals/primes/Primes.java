@@ -32,11 +32,19 @@ public class Primes {
         List<Long> result = new ArrayList<>(Math.round((float) Math.log(upperBound) * 1.1f));
         result.add(2L);
 
-        for (long n = 3; n <= upperBound; n+=2) {
+        long sqrt = (long) Math.sqrt(upperBound);
+        for (long n = 3; n <= sqrt; n+=2) {
             if (!sieve.get((int)(n>>1)-1)) {
                 result.add(n);
-                for (long j = 3*n; j <= upperBound && j > 0; j += 2*n)
+                for (long j = n*n; j <= upperBound && j > 0; j += 2*n)
                     sieve.set((int)(j>>1)-1);
+            }
+        }
+        if ((sqrt&1) == 0)
+            sqrt--;
+        for (long n = sqrt + 2; n <= upperBound; n+=2) {
+            if (!sieve.get((int)(n>>1)-1)) {
+                result.add(n);
             }
         }
         return result;

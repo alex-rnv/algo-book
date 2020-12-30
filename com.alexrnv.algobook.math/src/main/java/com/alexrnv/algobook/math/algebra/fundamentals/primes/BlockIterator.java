@@ -15,18 +15,18 @@ class BlockIterator {
         this.upperBound = upperBound;
         this.basePrimes = basePrimes;
         this.blockIndex = firstBlockIndex;
-        prepareNextBlock(true);
+        prepareNextBlockOrFinish(true);
     }
 
-    private boolean prepareNextBlock() {
-        return prepareNextBlock(false);
+    private boolean prepareNextBlockOrFinish() {
+        return prepareNextBlockOrFinish(false);
     }
 
-    private boolean prepareNextBlock(boolean adjustShiftInFirstBlock) {
+    private boolean prepareNextBlockOrFinish(boolean adjustShiftInFirstBlock) {
         long blockOffset = (long) blockIndex * blockSize;
 
         if (blockOffset >= upperBound)
-            return false;
+            return true;
 
         if ((blockOffset + blockSize) > upperBound) {
             this.currentBlock = new Block((int)(upperBound - blockOffset + 1), blockOffset);
@@ -35,24 +35,25 @@ class BlockIterator {
         }
         this.currentBlock.precalculate(basePrimes);
         if (adjustShiftInFirstBlock) {
-            this.shiftInBlock = (int) (basePrimes.get(basePrimes.size() - 1) - blockOffset + 1);
+            int nextPrimeIndexInBlock = (int)(basePrimes.get(basePrimes.size() - 1) - blockOffset + 1);
+            this.shiftInBlock = Math.max(nextPrimeIndexInBlock, 0);
         } else {
             this.shiftInBlock = 0;
         }
         ++blockIndex;
-        return true;
+        return false;
     }
 
     long nextPrime() {
         if (shiftInBlock >= currentBlock.getBlockSize()) {
-            if (!prepareNextBlock()) {
+            if (prepareNextBlockOrFinish()) {
                 return 0;
             }
         }
         while (currentBlock.get(shiftInBlock)) {
             shiftInBlock++;
             if (shiftInBlock >= currentBlock.getBlockSize()) {
-                if (!prepareNextBlock()) {
+                if (prepareNextBlockOrFinish()) {
                     return 0;
                 }
             }
